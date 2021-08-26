@@ -10,21 +10,36 @@
           crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Lista de Tarefas</h1>
-                <form action="{% url 'tarefas:home' %}" method="post"> {% csrf_token %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Lista de Tarefas</h1>
+            <form action="{% url 'tarefas:home' %}" method="post"> {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control"
+                           placeholder="Descreva sua tarefa" aria-label="Descreva sua tarefa"
+                           aria-describedby="button-addon2" name="nome">
+                    <button type="submit" class="btn btn-primary" id="button-addon2">Salvar</button>
+                </div>
+                <small class="form-text text-muted">{{ form.nome.errors }}</small>
+            </form>
+
+            <h1 class="mt-5">Tarefas Pendentes</h1>
+            {% for tarefa in tarefas_pendentes %}
+                <form action="" method="">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control"
-                               placeholder="Descreva sua tarefa" aria-label="Descreva sua tarefa"
-                               aria-describedby="button-addon2" name="nome">
-                        <button type="submit" class="btn btn-primary" id="button-addon2">Salvar</button>
+                        <div class="input-group-text">
+                            <input class="form-check-input mt-0" type="checkbox"
+                                   aria-label="Checkbox para tarefa">
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input para tarefa"
+                               value="{{ tarefa.nome }}">
                     </div>
-                    <small class="form-text text-muted">{{ form.nome.errors }}</small>
                 </form>
-            </div>
+            {% endfor %}
+
         </div>
     </div>
+</div>
 </body>
 </html>
