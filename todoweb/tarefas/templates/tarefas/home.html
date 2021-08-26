@@ -24,17 +24,30 @@
                 <small class="form-text text-muted">{{ form.nome.errors }}</small>
             </form>
 
-            <h1 class="mt-5">Tarefas Pendentes</h1>
+            <h2 class="mt-5">Tarefas Pendentes</h2>
             {% for tarefa in tarefas_pendentes %}
-                <form action="" method="">
+                <form action="{% url 'tarefas:detalhe' tarefa_id=tarefa.id %}" method="post"> {% csrf_token %}
                     <div class="input-group mb-3">
-                        <div class="input-group-text">
-                            <input class="form-check-input mt-0" type="checkbox"
-                                   aria-label="Checkbox para tarefa">
-                        </div>
-                        <input type="text" class="form-control" aria-label="Text input para tarefa"
-                               value="{{ tarefa.nome }}">
+                        <input type="text" class="form-control" placeholder="Descreva sua tarefa"
+                               aria-label="Descreva sua tarefa" required="required"
+                               name="nome" value="{{ tarefa.nome }}">
+                        <input type="hidden" value="checked" name="feita">
+                        <button type="submit" class="btn btn-success" >Marcar como Feita</button>
                     </div>
+
+                </form>
+            {% endfor %}
+
+            <h2 class="mt-5">Tarefas Feitas</h2>
+            {% for tarefa in tarefas_feitas %}
+                <form action="{% url 'tarefas:detalhe' tarefa_id=tarefa.id %}" method="post"> {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Descreva sua tarefa"
+                               aria-label="Descreva sua tarefa" required="required"
+                               name="nome" value="{{ tarefa.nome }}">
+                        <button type="submit" class="btn btn-warning" >Marcar como Pendente</button>
+                    </div>
+
                 </form>
             {% endfor %}
 
